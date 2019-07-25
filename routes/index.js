@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-var comments = ''; // 缓存
+var comments = {}; // 缓存
 function html_encode(str) {
   var s = '';
   if(str.length === 0) return '';
-  s = str.replace(/&/g, '&gt;');
+  s = str.replace(/&/g, '&amp;');
   s = s.replace(/</g, '&lt;');
   s = s.replace(/>/g, '&gt;');
   s = s.replace(/\s/g, '&nbsp;');
