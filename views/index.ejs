@@ -3,9 +3,75 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript">
+      var parse = function() {
+        var results = '';
+        try {
+          HtmlParse()
+        } catch(e) {
+
+        } finally {
+
+        }
+      }
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <textarea name="name" rows="8" cols="80" id="txt">
+      <p>
+        sks
+        <img src="null" slt="" onerror="alert(1)" />
+      </p>
+    </textarea>
+
+    <button type="button" name="button" id="btn">提交评论</button>
+    <button type="button" name="button" id="get">获取评论</button>
+
+    <script type="text/javascript">
+      var btn = document.getElementById('btn');
+      var get = document.getElementById('get');
+      var txt = document.getElementById('txt');
+
+      btn.addEventListener('click', function() {  // addEventListener:ie不支持
+        var xhr = new XMLHttpRequest(); // 可以实现ajax
+        var url = '/comment?comment=' + text.value; // 定义请求接口
+        xhr.open('GET', url, true); // 发送数据之前，需要先打开这个对象。告诉对象是以get方式打开，请求地址，传递true参数即可
+        // 定义在客户端的响应方式
+        xhr.onreadystatechange = function() { // 监听这个xhr对象和服务端进行通讯之后的连接状态
+          // 通过监听这个对象的状态，来获取客户端和服务端通讯的过程和进度
+          if(xhr.readyState === 4) { // 表示整个的连接通讯成功
+            if (xhr.status === 200) { // 说明客户端和服务端的通讯已经完全成功
+              console.log(xhr); // 目的是监听成功，不做任何处理-----（真实的业务中当然不会这么写，会后续做一些其他处理）
+            } else {
+              console.log('error');
+            }
+          }
+        };
+        xhr.send();
+      });
+
+      // 获取评论
+      get.addEventListener('click', function() {  // addEventListener:ie不支持
+        var xhr = new XMLHttpRequest(); // 可以实现ajax
+        var url = '/getComment'; // 定义请求接口
+        xhr.open('GET', url, true); // 发送数据之前，需要先打开这个对象。告诉对象是以get方式打开，请求地址，传递true参数即可
+        // 定义在客户端的响应方式
+        xhr.onreadystatechange = function() { // 监听这个xhr对象和服务端进行通讯之后的连接状态
+          // 通过监听这个对象的状态，来获取客户端和服务端通讯的过程和进度
+          if(xhr.readyState === 4) { // 表示整个的连接通讯成功
+            if (xhr.status === 200) { // 说明客户端和服务端的通讯已经完全成功
+              // 解码、配对校验 ，防止xss攻击的两个重要过程
+              parse
+            } else {
+              console.log('error');
+            }
+          }
+        };
+        xhr.send();
+      });
+    </script>
   </body>
 </html>
